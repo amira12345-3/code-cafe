@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Code Café: ArrayList Adventures — An AP CSA interactive game teaching Java ArrayLists">
+  <title>Code Café ☕ ArrayList Adventures</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- =============================================
+     SCREEN 1: SPLASH
+     ============================================= -->
+<div id="screen-splash" class="screen active" role="main" aria-label="Welcome screen">
+  <div class="splash-bg" aria-hidden="true">
+    <div class="cafe-window">
+      <div class="cafe-window-inner">
+        <div class="steam steam1"></div>
+        <div class="steam steam2"></div>
+        <div class="steam steam3"></div>
+      </div>
+    </div>
+    <div class="splash-tiles">
+      <div class="tile t1"></div><div class="tile t2"></div>
+      <div class="tile t3"></div><div class="tile t4"></div>
+      <div class="tile t5"></div><div class="tile t6"></div>
+    </div>
+  </div>
+  <div class="splash-content">
+    <div class="game-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 80 80" width="80" height="80" aria-hidden="true">
+          <circle cx="40" cy="40" r="38" fill="#6B4226" stroke="#4a2c13" stroke-width="2"/>
+          <ellipse cx="40" cy="48" rx="22" ry="14" fill="#f5e6d3"/>
+          <ellipse cx="40" cy="45" rx="18" ry="11" fill="#8B5E3C"/>
+          <rect x="60" y="38" width="10" height="8" rx="4" fill="#f5e6d3"/>
+          <text x="40" y="43" text-anchor="middle" font-size="14" font-family="monospace" font-weight="bold" fill="#6B4226">{}</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-main">Code Café</span>
+        <span class="logo-sub">ArrayList Adventures</span>
+      </div>
+    </div>
+    <p class="splash-tagline">Master Java ArrayLists — one order at a time!</p>
+    <div class="splash-badges">
+      <span class="badge badge-ap">AP CSA</span>
+      <span class="badge badge-java">Java</span>
+      <span class="badge badge-8">8 Levels</span>
+    </div>
+    <div class="splash-buttons">
+      <button class="btn btn-primary btn-xl pulse-anim" id="btn-start">☕ Start Your Shift</button>
+      <button class="btn btn-secondary btn-xl hidden" id="btn-continue">▶ Continue Shift</button>
+    </div>
+    <div class="splash-footer">
+      <button class="btn btn-ghost btn-sm" id="btn-settings">⚙️ Settings</button>
+      <button class="btn btn-ghost btn-sm" id="btn-help">❓ How to Play</button>
+    </div>
+    <footer class="copyright-bar">
+      © All Rights Reserved — Ms. Amira Tarek &nbsp;·&nbsp;
+      <a href="mailto:amiratareks512@gmail.com">amiratareks512@gmail.com</a>
+    </footer>
+  </div>
+</div>
+
+<!-- =============================================
+     SCREEN 2: NAME ENTRY
+     ============================================= -->
+<div id="screen-name" class="screen" role="main" aria-label="Enter your name">
+  <div class="center-card">
+    <div class="coach-intro">
+      <div class="coach-avatar" id="coach-main">
+        <!-- Coach Byte SVG injected by JS -->
+      </div>
+      <div class="speech-bubble slide-in-right">
+        <p>👋 Welcome to <strong>Code Café</strong>!</p>
+        <p>I'm <strong>Coach Byte</strong> — your Java ArrayList mentor. 🤖</p>
+        <p>We'll work through 8 missions to master ArrayLists for your AP exam!</p>
+        <p>First things first — what's your name?</p>
+      </div>
+    </div>
+    <div class="name-form card">
+      <label for="student-name" class="form-label">Enter Your Name</label>
+      <input type="text" id="student-name" class="form-input" placeholder="e.g. Alex Chen" maxlength="30" autocomplete="given-name" autofocus>
+      <button class="btn btn-primary btn-lg" id="btn-name-go">Let's Go! →</button>
+    </div>
+  </div>
+  <footer class="copyright-bar">
+    © All Rights Reserved — Ms. Amira Tarek &nbsp;·&nbsp;
+    <a href="mailto:amiratareks512@gmail.com">amiratareks512@gmail.com</a>
+  </footer>
+</div>
+
+<!-- =============================================
+     SCREEN 3: LEVEL MAP
+     ============================================= -->
+<div id="screen-map" class="screen" role="main" aria-label="Level selection map">
+  <header class="map-header">
+    <div class="map-header-left">
+      <h1>☕ Code Café</h1>
+      <div class="player-chip">
+        <span class="player-avatar">👨‍💻</span>
+        <span id="map-player-name">Player</span>
+        <span class="xp-pill">⭐ <strong id="map-xp">0</strong> XP</span>
+      </div>
+    </div>
+    <div class="map-header-right">
+      <button class="btn btn-ghost btn-sm" id="btn-map-settings">⚙️</button>
+      <button class="btn btn-ghost btn-sm hidden" id="btn-view-cert">🏆 Certificate</button>
+    </div>
+  </header>
+
+  <div class="map-scroll-area">
+    <div class="map-subtitle">🗺️ Choose your next mission</div>
+    <div class="level-path" id="level-map" role="list" aria-label="Levels">
+      <!-- Level nodes injected by JS -->
+    </div>
+    <div class="map-overall-progress">
+      <div class="progress-track">
+        <div class="progress-fill" id="map-progress-fill"></div>
+      </div>
+      <div class="progress-label" id="map-progress-text">0 / 8 Levels Complete</div>
+    </div>
+  </div>
+  <footer class="copyright-bar">
+    © All Rights Reserved — Ms. Amira Tarek &nbsp;·&nbsp;
+    <a href="mailto:amiratareks512@gmail.com">amiratareks512@gmail.com</a>
+  </footer>
+</div>
+
+<!-- =============================================
+     SCREEN 4: LEVEL PLAY
+     ============================================= -->
+<div id="screen-level" class="screen" role="main" aria-label="Level gameplay">
+  <header class="level-header">
+    <button class="btn btn-ghost btn-sm back-btn" id="btn-back-map">← Map</button>
+    <div class="level-header-center">
+      <span class="level-num" id="hdr-level-num">Level 1</span>
+      <span class="level-title" id="hdr-level-title">What is an ArrayList?</span>
+    </div>
+    <div class="level-header-stars" id="hdr-stars">
+      <span class="star" data-s="1">☆</span>
+      <span class="star" data-s="2">☆</span>
+      <span class="star" data-s="3">☆</span>
+    </div>
+  </header>
+
+  <div class="level-body">
+    <!-- Coach sidebar -->
+    <aside class="coach-column" id="coach-col">
+      <div class="coach-avatar-sm" id="coach-level-avatar"></div>
+      <div class="coach-bubble" id="coach-bubble">
+        <p id="coach-msg">Loading...</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-label">📋 Mission</div>
+        <div id="mission-desc">...</div>
+      </div>
+      <div class="can-do-card">
+        <div class="can-do-label">🎯 I can...</div>
+        <div id="can-do-text">...</div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="level-content-col">
+
+      <!-- Mini Lesson Panel -->
+      <section class="panel lesson-panel" id="lesson-panel">
+        <button class="panel-toggle" id="lesson-toggle" aria-expanded="true" aria-controls="lesson-body">
+          <span>📚 Mini Lesson</span>
+          <span class="toggle-arrow">▼</span>
+        </button>
+        <div class="panel-body" id="lesson-body">
+          <!-- Lesson content injected by JS -->
+        </div>
+      </section>
+
+      <!-- Task Panel -->
+      <section class="panel task-panel" id="task-panel">
+        <div class="panel-header-static">
+          <span>⚡ Your Task</span>
+          <span class="star-tracker" id="star-tracker">⭐⭐⭐ on the line!</span>
+        </div>
+        <div class="task-body">
+          <div class="task-instructions" id="task-instructions">
+            <!-- Task text injected by JS -->
+          </div>
+          <div class="task-workspace" id="task-workspace">
+            <!-- Interactive element injected by JS -->
+          </div>
+        </div>
+        <div class="task-footer">
+          <div class="attempt-info" id="attempt-info"></div>
+          <div class="task-btns">
+            <button class="btn btn-hint" id="btn-hint">💡 Hint <span class="cost-badge">-1⭐</span></button>
+            <button class="btn btn-check" id="btn-check">✓ Check Answer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feedback Panel (hidden until answer checked) -->
+      <section class="panel feedback-panel hidden" id="feedback-panel" aria-live="assertive">
+        <div class="feedback-status" id="feedback-status">
+          <!-- ✅ or ❌ icon + title -->
+        </div>
+        <div class="feedback-message" id="feedback-msg">
+          <!-- Explanation -->
+        </div>
+        <div class="feedback-code-block hidden" id="feedback-code">
+          <!-- Code context -->
+        </div>
+        <div class="feedback-btns">
+          <button class="btn btn-secondary" id="btn-explain-more">📖 Explain More</button>
+          <button class="btn btn-retry hidden" id="btn-retry">🔄 Try Again</button>
+          <button class="btn btn-skip hidden" id="btn-skip-level">⏭️ Skip Level <span class="cost-badge">-1⭐</span></button>
+          <button class="btn btn-next hidden" id="btn-next-level">Next Level →</button>
+        </div>
+      </section>
+
+    </div><!-- /level-content-col -->
+  </div><!-- /level-body -->
+  <footer class="copyright-bar">
+    © All Rights Reserved — Ms. Amira Tarek &nbsp;·&nbsp;
+    <a href="mailto:amiratareks512@gmail.com">amiratareks512@gmail.com</a>
+  </footer>
+</div>
+
+<!-- =============================================
+     SCREEN 5: CERTIFICATE
+     ============================================= -->
+<div id="screen-certificate" class="screen" role="main" aria-label="Completion certificate">
+  <div class="cert-page">
+    <div class="certificate printable" id="certificate">
+      <div class="cert-border">
+        <div class="cert-header-section">
+          <div class="cert-cafe-icon">☕</div>
+          <h1 class="cert-h1">Certificate of Achievement</h1>
+          <p class="cert-course-name">Code Café: ArrayList Adventures</p>
+          <p class="cert-tagline">AP Computer Science A</p>
+        </div>
+        <div class="cert-divider"></div>
+        <div class="cert-body-section">
+          <p class="cert-awarded-to">This certifies that</p>
+          <p class="cert-student-name" id="cert-student-name">Student</p>
+          <p class="cert-desc">has successfully completed all 8 missions and demonstrated mastery of</p>
+          <div class="cert-skills">
+            <span>ArrayList Declaration</span>
+            <span>add() &amp; add(index)</span>
+            <span>get() &amp; set()</span>
+            <span>remove() Overloads</span>
+            <span>size() &amp; Loops</span>
+            <span>indexOf() &amp; contains()</span>
+            <span>Safe Traversal</span>
+            <span>AP CSA Standards</span>
+          </div>
+        </div>
+        <div class="cert-divider"></div>
+        <div class="cert-footer-section">
+          <div class="cert-score-display">
+            <div class="cert-stars" id="cert-star-display">⭐⭐⭐⭐⭐⭐⭐⭐</div>
+            <div class="cert-xp" id="cert-xp-display">XP: 0</div>
+          </div>
+          <div class="cert-date-sig">
+            <span class="cert-date" id="cert-date"></span>
+            <span class="cert-sig">Coach Byte 🤖</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-actions no-print">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Print Certificate</button>
+      <button class="btn btn-secondary" id="btn-cert-back">← Back to Map</button>
+    </div>
+    <footer class="copyright-bar">
+      © All Rights Reserved — Ms. Amira Tarek &nbsp;·&nbsp;
+      <a href="mailto:amiratareks512@gmail.com">amiratareks512@gmail.com</a>
+    </footer>
+  </div>
+</div>
+
+<!-- =============================================
+     OVERLAY: SETTINGS
+     ============================================= -->
+<div id="overlay-settings" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Settings">
+  <div class="overlay-box card">
+    <div class="overlay-header">
+      <h2>⚙️ Settings</h2>
+      <button class="btn-close" id="btn-close-settings" aria-label="Close settings">✕</button>
+    </div>
+    <div class="settings-list">
+      <label class="setting-row">
+        <div class="setting-info">
+          <span class="setting-title">🔊 Sound Effects</span>
+          <span class="setting-desc">Play sounds on actions</span>
+        </div>
+        <input type="checkbox" class="visually-hidden" id="snd-sfx" checked>
+        <span class="toggle-pill" aria-hidden="true"></span>
+      </label>
+      <label class="setting-row">
+        <div class="setting-info">
+          <span class="setting-title">🎵 Background Music</span>
+          <span class="setting-desc">Ambient café music</span>
+        </div>
+        <input type="checkbox" class="visually-hidden" id="snd-bgm">
+        <span class="toggle-pill" aria-hidden="true"></span>
+      </label>
+      <label class="setting-row">
+        <div class="setting-info">
+          <span class="setting-title">♿ Reduced Motion</span>
+          <span class="setting-desc">Disable animations</span>
+        </div>
+        <input type="checkbox" class="visually-hidden" id="set-reduced">
+        <span class="toggle-pill" aria-hidden="true"></span>
+      </label>
+      <label class="setting-row">
+        <div class="setting-info">
+          <span class="setting-title">🌙 Dark Mode</span>
+          <span class="setting-desc">Switch to dark theme</span>
+        </div>
+        <input type="checkbox" class="visually-hidden" id="set-dark">
+        <span class="toggle-pill" aria-hidden="true"></span>
+      </label>
+      <label class="setting-row">
+        <div class="setting-info">
+          <span class="setting-title">📝 Large Text</span>
+          <span class="setting-desc">Increase font size</span>
+        </div>
+        <input type="checkbox" class="visually-hidden" id="set-large">
+        <span class="toggle-pill" aria-hidden="true"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     OVERLAY: HINT CONFIRM
+     ============================================= -->
+<div id="overlay-hint" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Hint">
+  <div class="overlay-box card hint-box">
+    <div class="overlay-header">
+      <h2>💡 Need a Hint?</h2>
+      <button class="btn-close" id="btn-close-hint" aria-label="Close hint">✕</button>
+    </div>
+    <div class="hint-preview" id="hint-preview">Loading hint...</div>
+    <p class="hint-cost-warning">⚠️ Using this hint costs <strong>1 ⭐</strong> — max 2 stars achievable on this attempt.</p>
+    <div class="hint-actions">
+      <button class="btn btn-primary" id="btn-confirm-hint">Show Hint 💡</button>
+      <button class="btn btn-ghost" id="btn-cancel-hint">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     OVERLAY: TEACHER MODE
+     ============================================= -->
+<div id="overlay-teacher" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Teacher Mode">
+  <div class="overlay-box card teacher-box">
+    <div class="overlay-header">
+      <h2>👨‍🏫 Teacher Mode</h2>
+      <button class="btn-close" id="btn-close-teacher" aria-label="Close teacher panel">✕</button>
+    </div>
+    <div class="teacher-tabs" role="tablist">
+      <button class="tab-btn active" role="tab" data-tab="t-overview">📊 Overview</button>
+      <button class="tab-btn" role="tab" data-tab="t-log">📋 Attempt Log</button>
+      <button class="tab-btn" role="tab" data-tab="t-export">📥 Export</button>
+    </div>
+    <div class="teacher-tab-body">
+      <div class="tab-panel active" id="t-overview">
+        <div id="teacher-overview"></div>
+        <hr>
+        <button class="btn btn-danger btn-sm" id="btn-reset-all">🗑️ Reset All Progress</button>
+      </div>
+      <div class="tab-panel" id="t-log">
+        <div id="teacher-log"></div>
+      </div>
+      <div class="tab-panel" id="t-export">
+        <p>Download current progress as JSON for record-keeping.</p>
+        <button class="btn btn-primary" id="btn-export">📥 Export JSON</button>
+        <pre id="export-json-preview"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     OVERLAY: HOW TO PLAY
+     ============================================= -->
+<div id="overlay-howto" class="overlay hidden" role="dialog" aria-modal="true" aria-label="How to play">
+  <div class="overlay-box card">
+    <div class="overlay-header">
+      <h2>❓ How to Play</h2>
+      <button class="btn-close" id="btn-close-howto" aria-label="Close">✕</button>
+    </div>
+    <div class="howto-body">
+      <div class="howto-step"><span class="howto-num">1</span><p>Read the <strong>mini lesson</strong> — it covers exactly what you need for the task.</p></div>
+      <div class="howto-step"><span class="howto-num">2</span><p>Complete the <strong>interactive task</strong> — click, drag, or fill in code.</p></div>
+      <div class="howto-step"><span class="howto-num">3</span><p>Press <strong>Check Answer</strong> to get immediate feedback.</p></div>
+      <div class="howto-step"><span class="howto-num">4</span><p>Earn <strong>⭐⭐⭐ stars</strong>: 3 for first try, 2 for second, 1 after hints.</p></div>
+      <div class="howto-step"><span class="howto-num">5</span><p>Unlock the next level and earn <strong>XP</strong> toward your certificate!</p></div>
+      <p class="howto-secret">🔒 <em>Secret: Type <strong>TEACHER</strong> anywhere to enter Teacher Mode.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     CONFETTI CANVAS
+     ============================================= -->
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- =============================================
+     AUDIO ELEMENTS (placeholder — swap in real files)
+     ============================================= -->
+<audio id="sfx-click"   preload="none" src="assets/sfx-click.mp3"></audio>
+<audio id="sfx-correct" preload="none" src="assets/sfx-correct.mp3"></audio>
+<audio id="sfx-wrong"   preload="none" src="assets/sfx-wrong.mp3"></audio>
+<audio id="sfx-level"   preload="none" src="assets/sfx-level.mp3"></audio>
+<audio id="sfx-star"    preload="none" src="assets/sfx-star.mp3"></audio>
+<audio id="bgm-cafe"    preload="none" src="assets/bgm-cafe.mp3" loop></audio>
+
+<!-- Teacher-mode key logger indicator -->
+<div id="key-buffer-display" aria-hidden="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
